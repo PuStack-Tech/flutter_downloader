@@ -33,7 +33,7 @@ public class TaskDao {
     }
 
     public void insertOrUpdateNewTask(String taskId, String url, int status, int progress, String fileName,
-                                       String savedDir, String headers, boolean showNotification, boolean openFileFromNotification, boolean saveInPublicStorage) {
+                                       String savedDir, String headers, boolean showNotification, boolean openFileFromNotification, boolean saveInPublicStorage, boolean resumable) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -47,7 +47,7 @@ public class TaskDao {
         values.put(TaskContract.TaskEntry.COLUMN_NAME_MIME_TYPE, "unknown");
         values.put(TaskContract.TaskEntry.COLUMN_NAME_SHOW_NOTIFICATION, showNotification ? 1 : 0);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_OPEN_FILE_FROM_NOTIFICATION, openFileFromNotification ? 1 : 0);
-        values.put(TaskContract.TaskEntry.COLUMN_NAME_RESUMABLE, 0);
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_RESUMABLE, resumable ? 1 : 0);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TIME_CREATED, System.currentTimeMillis());
         values.put(TaskContract.TaskEntry.COLUMN_SAVE_IN_PUBLIC_STORAGE, saveInPublicStorage ? 1 : 0);
 

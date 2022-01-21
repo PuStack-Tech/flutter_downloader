@@ -178,6 +178,7 @@ public class FlutterDownloaderPlugin implements MethodCallHandler, FlutterPlugin
         boolean openFileFromNotification = call.argument("open_file_from_notification");
         boolean requiresStorageNotLow = call.argument("requires_storage_not_low");
         boolean saveInPublicStorage = call.argument("save_in_public_storage");
+        boolean resumable = call.argument("resumable");
         WorkRequest request = buildRequest(url, savedDir, filename, headers, showNotification,
                 openFileFromNotification, false, requiresStorageNotLow, saveInPublicStorage);
         WorkManager.getInstance(context).enqueue(request);
@@ -185,7 +186,7 @@ public class FlutterDownloaderPlugin implements MethodCallHandler, FlutterPlugin
         result.success(taskId);
         sendUpdateProgress(taskId, DownloadStatus.ENQUEUED, 0);
         taskDao.insertOrUpdateNewTask(taskId, url, DownloadStatus.ENQUEUED, 0, filename,
-                savedDir, headers, showNotification, openFileFromNotification, saveInPublicStorage);
+                savedDir, headers, showNotification, openFileFromNotification, saveInPublicStorage, resumable);
     }
 
     private void loadTasks(MethodCall call, MethodChannel.Result result) {

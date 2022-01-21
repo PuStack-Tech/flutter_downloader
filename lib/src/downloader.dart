@@ -68,15 +68,17 @@ class FlutterDownloader {
   ///
   /// an unique identifier of the new download task
   ///
-  static Future<String?> enqueue(
-      {required String url,
-      required String savedDir,
-      String? fileName,
-      Map<String, String>? headers,
-      bool showNotification = true,
-      bool openFileFromNotification = true,
-      bool requiresStorageNotLow = true,
-      bool saveInPublicStorage = false}) async {
+  static Future<String?> enqueue({
+    required String url,
+    required String savedDir,
+    String? fileName,
+    Map<String, String>? headers,
+    bool showNotification = true,
+    bool openFileFromNotification = true,
+    bool requiresStorageNotLow = true,
+    bool saveInPublicStorage = false,
+    bool resumable = false,
+  }) async {
     assert(_initialized, 'FlutterDownloader.initialize() must be called first');
     assert(Directory(savedDir).existsSync());
 
@@ -99,6 +101,7 @@ class FlutterDownloader {
         'open_file_from_notification': openFileFromNotification,
         'requires_storage_not_low': requiresStorageNotLow,
         'save_in_public_storage': saveInPublicStorage,
+        'resumable': resumable,
       });
       return taskId;
     } on PlatformException catch (e) {
